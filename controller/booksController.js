@@ -14,7 +14,10 @@ const getAllBooks = async (req, res) => {
 const getBookById = async (req, res) => {
   try{
     const book = await Book.findById(req.params.id)
-    res.status(302).json({book, message: 'buku ditemukan'})
+    res.status(302).json({
+      book, 
+      message: 'buku ditemukan'
+    })
   } catch(err){
     res.json({
       // message: err.message,
@@ -39,15 +42,43 @@ const addBooks = async (req, res) => {
 
 const updateBook = async (req, res) => {
   try{
-    const updateBook = await Book.updateOne(
-      { _id: req.params.id},
-      { $set: req.body}
+    const bookUpdated = await Book.updateOne(
+      {_id: req.params.id}, 
+      {
+        $set: {
+          namaBuku: req.body.namaBuku,
+          penerbit: req.body.penerbit,
+          pengarang: req.body.pengarang
+        }
+      }
     )
-    res.status(200).json(updateBook)
+    console.log(bookUpdated)
+    res.status(200).json(bookUpdated)
   }catch(err){
     res.status(400).json({message: err.message});
   }
 }
+
+// const updateBook = async (req, res) => {
+//   try{
+//     const bookUpdated = await Book.findByIdAndUpdate(req.params.id, {
+//       namaBuku: req.body.namaBuku,
+//       penerbit: req.body.penerbit,
+//       pengarang: req.body.pengarang
+//     })
+//     //   {_id: req.params.id},
+//     //   {$set: {
+//     //       namaBuku: req.body.namaBuku,
+//     //       penerbit: req.body.penerbit,
+//     //       pengarang: req.body.pengarang,
+//     //     }
+//     //   }
+//     // )
+//     res.status(200).json(bookUpdated)
+//   }catch(err){
+//     res.status(400).json({message: err.message})
+//   }
+// }
 
 const deleteBook = async (req, res) => {
   try{

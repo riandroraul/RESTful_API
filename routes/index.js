@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', getAllBooks)
 router.get('/id/:id', getBookById)
 router.post('/tambah', addBooks)
-router.patch('/ubah/:id', updateBook)
+router.put('/ubah/:id', updateBook)
 router.delete('/hapus/:id', deleteBook)
 
 // router.put('/books/ubah', (req, res) => {
