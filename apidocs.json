@@ -23,9 +23,9 @@
       "get": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "swagTest",
-        "tags": ["/books/id/params"],
+        "tags": ["/books/id/:id"],
         "description": "untuk mendapatkan satu data buku berdasarkan id",
-        "parameters": ["id"],
+        "parameters": [],
         "responses": {}
       }
     },
@@ -49,7 +49,7 @@
         "responses": {}
       }
     },
-    "/books/hapus/{id}": {
+    "/books/hapus/62bd287cab145e24dd0326dc": {
       "delete": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "swagTest",
