@@ -4,6 +4,12 @@ const router = require('./routes/index');
 const bodyParser = require('body-parser');
 const app = express()
 const port = 3000
+const swaggerUi = require('swagger-ui-express')
+const apiDocumentation = require('./apidocs.json')
+const swaggerJsDoc = require('swagger-jsdoc')
+
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiDocumentation))
 
 mongoose.connect('mongodb://127.0.0.1:27017/perpus', {
   useNewUrlParser: true,
@@ -12,13 +18,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/perpus', {
 const db = mongoose.connection;
 // db.once('open', () => {console.log('database connected')})
 
+
 // menggunakan body-parser
 app.use(bodyParser.json())
 // app.use(express.json)
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-
 app.use('/books', router)
 
 // app.use('/books/tambah', router)

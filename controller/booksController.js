@@ -34,7 +34,7 @@ const addBooks = async (req, res) => {
   });
   try{
     const addBook = await books.save()
-    res.status(201).json(addBook)
+    res.status(201).json({addBook, message: "berhasil ditambahkan"})
   }catch(err){
     res.status(400).json({message: err.message});
   }
