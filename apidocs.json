@@ -1,0 +1,63 @@
+{
+   "swagger": "2.0",
+   "info": {
+     "title": "API BUKU",
+     "description": "panduan untuk mengakses data buku dengan restful API",
+     "version": "1.0"
+   },
+   "produces": ["application/json"],
+   "host": "localhost:3000",
+   "basePath": "",
+   "paths": {
+     "/books": {
+       "get": {
+         "x-swagger-router-controller": "middleware-name1",
+         "operationId": "swagTest",
+         "tags": ["/books"],
+         "description": "untuk mendapatkan semua data buku",
+         "parameters": [],
+         "responses": {}
+       }
+     },
+     "/books/id/62b92448e34d54bc423d9a88": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "swagTest",
+        "tags": ["/books/id/params"],
+        "description": "untuk mendapatkan satu data buku berdasarkan id",
+        "parameters": ["id"],
+        "responses": {}
+      }
+    },
+     "/books/tambah": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "swagTest",
+        "tags": ["/books/tambah"],
+        "description": "menambah data buku baru",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/books/ubah/{id}": {
+      "put": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "swagTest",
+        "tags": ["/books/ubah"],
+        "description": "untuk mengubah satu data buku berdasarkan id buku",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/books/hapus/{id}": {
+      "delete": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "swagTest",
+        "tags": ["/books/hapus"],
+        "description": "untuk menghapus satu data buku berdasarkan id buku",
+        "parameters": [],
+        "responses": {}
+      }
+    }
+   }
+}
