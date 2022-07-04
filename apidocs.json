@@ -1,7 +1,7 @@
 {
    "swagger": "2.0",
    "info": {
-     "title": "API BUKU",
+     "title": "Swagger book api",
      "description": "panduan untuk mengakses data buku dengan restful API",
      "version": "1.0"
    },
@@ -11,7 +11,7 @@
    "paths": {
      "/books": {
        "get": {
-         "x-swagger-router-controller": "middleware-name1",
+         "x-swagger-router-controller": "routes",
          "operationId": "swagTest",
          "tags": ["/books"],
          "description": "untuk mendapatkan semua data buku",
@@ -19,13 +19,19 @@
          "responses": {}
        }
      },
-     "/books/id/62b92448e34d54bc423d9a88": {
+     "/books/id/{id}": {
       "get": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "swagTest",
-        "tags": ["/books/id/:id"],
+        "tags": ["/books/id/"],
         "description": "untuk mendapatkan satu data buku berdasarkan id",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "need book id to get specific book"
+          }
+        ],
         "responses": {}
       }
     },
@@ -33,7 +39,7 @@
       "post": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "swagTest",
-        "tags": ["/books/tambah"],
+        "tags": "/books/tambah",
         "description": "menambah data buku baru",
         "parameters": [],
         "responses": {}
@@ -49,13 +55,19 @@
         "responses": {}
       }
     },
-    "/books/hapus/62bd287cab145e24dd0326dc": {
+    "/books/hapus/{:id}": {
       "delete": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "swagTest",
         "tags": ["/books/hapus"],
         "description": "untuk menghapus satu data buku berdasarkan id buku",
-        "parameters": [],
+        "parameters": [
+          {
+          "namaBuku": "namabuku1",
+          "penerbit": "penerbit1",
+          "pengarang": "pengarang1"
+          }
+        ],
         "responses": {}
       }
     }

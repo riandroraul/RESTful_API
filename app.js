@@ -4,12 +4,23 @@ const router = require('./routes/index');
 const bodyParser = require('body-parser');
 const app = express()
 const port = 3000
-const swaggerUi = require('swagger-ui-express')
-const apiDocumentation = require('./apidocs.json')
-const swaggerJsDoc = require('swagger-jsdoc')
+// const swaggerUi = require('swagger-ui-express')
+// const apiDocumentation = require('./apidocs.json')
+// const swaggerJsDoc = require('swagger-jsdoc')
 
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+const options = require("./swagger");
+const specs = swaggerJsDoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiDocumentation))
+// server.listen(port, ip,
+// 	() => {
+// 		console.log(`${service} version ${version} listening on ${ip}:${port}`);
+// 	});
+
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiDocumentation))
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/perpus', {
   useNewUrlParser: true,
@@ -26,6 +37,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 app.use('/books', router)
+
 
 // app.use('/books/tambah', router)
 // app.put('/books/ubah', router)

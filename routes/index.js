@@ -5,7 +5,46 @@ const { getAllBooks, addBooks, getBookById, updateBook, deleteBook } = require('
 const router = express.Router();
 
 router.get('/', getAllBooks)
+/**
+* @swagger
+* /books
+* get: 
+*  ringkasan: mengembalikan semua daftar buku 
+*  response: 
+*  200: 
+*   content: 
+*     aplication/json:
+*       schema:
+*         type: array
+*           items: 
+*             $ref: '#components/schemas/Book'
+*/
+
 router.get('/id/:id', getBookById)
+
+/**
+* @swagger
+* /books/id/{id}:
+* get: 
+*  ringkasan: mengembalikan data buku berdasarkan  id
+*  tags: [books]
+*  parameters: 
+*     in: path
+*     name: id
+*     schema: 
+*         type: string
+*         required: true
+*   description: id buku
+*     response: 
+*       200: 
+*         description: data buku berdasarkan id
+*         content: 
+*           aplication/json:
+*             schema:
+*                $ref: '#components/schemas/Book'
+*       404:
+*         description: data buku berdasarkan id
+*/
 router.post('/tambah', addBooks)
 router.put('/ubah/:id', updateBook)
 router.delete('/hapus/:id', deleteBook)

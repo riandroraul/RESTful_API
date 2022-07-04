@@ -14,7 +14,7 @@ const getAllBooks = async (req, res) => {
 const getBookById = async (req, res) => {
   try{
     const book = await Book.findById(req.params.id)
-    res.status(302).json({
+    res.status(200).json({
       book, 
       message: 'buku ditemukan'
     })
@@ -52,10 +52,10 @@ const updateBook = async (req, res) => {
         }
       }
     )
-    console.log(bookUpdated)
-    res.status(200).json(bookUpdated)
+    res.status(200).json({bookUpdated, message: 'book updated'})
   }catch(err){
-    res.status(400).json({message: err.message});
+    // res.status(400).json({message: err.message});
+    res.status(404).json({message: 'id not found'});
   }
 }
 
@@ -85,7 +85,8 @@ const deleteBook = async (req, res) => {
     const delBook = await Book.deleteOne({_id: req.params.id})
     res.status(200).json(delBook)
   }catch(err){
-    res.status(404).json({message: err.message})
+    // res.status(404).json({message: err.message})
+    res.status(404).json({message: "id not found"})
   }
 }
 
