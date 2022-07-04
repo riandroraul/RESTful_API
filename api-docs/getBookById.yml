@@ -1,0 +1,47 @@
+paths:
+  /books/id/{id}:
+    get:
+      tags:
+          - get book by id
+      summary: Get a book by id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: String id of the book to get
+      responses:
+        200:
+          description: get book by id 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  headers:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: number
+                      message:
+                        type: string
+                    data:
+                      type: object
+              examples:
+                # 200 succ:
+                #   value:
+                #     headers:
+                #       statusCode: 302
+                #       message: found.
+                #     data:
+                #       # username: string
+                #       namaBuku: namaBuku1
+                #       penerbit: penerbit1
+                #       pengarang: pengarang1
+                #       # role: Client
+                400 invalid:
+                  value:
+                    headers:
+                      statusCode: 400
+                      message: not found

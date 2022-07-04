@@ -1,0 +1,33 @@
+paths:
+  /books/tambah:
+    post:
+      tags:
+      - "add book"
+      summary: "Add a new book to the store"
+      description: "add a new book"
+      operationId: "addBook"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      requestBody:
+        description: data json of body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                namaBuku:
+                  type: string
+                  default: namaBuku1
+                penerbit:
+                  type: string
+                  default: penerbit1
+                pengarang:
+                  type: string
+                  default: pengarang1
+      responses:
+        "405":
+          description: "Invalid input"

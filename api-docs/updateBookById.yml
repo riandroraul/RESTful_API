@@ -1,0 +1,66 @@
+paths:
+  /books/ubah/{id}:
+    put:
+      tags:
+      - "update book by id"
+      summary: "update book data by id"
+      description: "update book data"
+      operationId: "updateBook"
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/xml
+      - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: String id of the book to update
+      requestBody:
+        description: data json of body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                namaBuku:
+                  type: string
+                  default: namaBuku1
+                penerbit:
+                  type: string
+                  default: penerbit1
+                pengarang:
+                  type: string
+                  default: pengarang1
+      responses:
+        200:
+          description: update book by id 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  headers:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+              examples:
+                200 success:
+                  value:
+                    acknowledged: true
+                    modifiedCount: 1
+                    upsertedId: null
+                    upsertedCount: 0
+                    matchedCount: 1
+                    message: book updated
+                404 not found:
+                  value:
+                    message: id not found

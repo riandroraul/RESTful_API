@@ -1,0 +1,33 @@
+paths:
+  /books:
+    get:
+      tags:
+        - get all books
+      summary: Get all books
+      description: to get all books
+      responses:
+        200:
+          description: response success to get all books
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  headers:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: number
+                      message:
+                        type: string
+              examples:
+                200 success:
+                  value:
+                    headers:
+                      statusCode: 200
+                      message: Success.
+                400 failed:
+                  value:
+                    headers:
+                      statusCode: 400
+                      message: failed

@@ -1,0 +1,50 @@
+paths:
+  /books/hapus/{id}:
+    delete:
+      tags:
+          - delete book by id
+      summary: delete a book by id
+      description: "delete book by id"
+      operationId: "deleteBook"
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/xml
+      - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: String id of the book to delete
+      responses:
+        200:
+          description: delete book by id 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  headers:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: number
+                      message:
+                        type: string
+                    data:
+                      type: object
+              examples:
+                200 success:
+                  value:
+                    acknowledged: true
+                    deletedCount: 1
+                404 success:
+                  value:
+                    message: id not found
+                
+
+                      
+    
