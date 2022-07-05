@@ -52,7 +52,7 @@ const updateBook = async (req, res) => {
         }
       }
     )
-    res.status(200).json({bookUpdated, message: 'book updated'})
+    res.status(200).json(bookUpdated)
   }catch(err){
     // res.status(400).json({message: err.message});
     res.status(404).json({message: 'id not found'});

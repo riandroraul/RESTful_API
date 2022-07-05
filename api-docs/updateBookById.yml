@@ -60,7 +60,6 @@ paths:
                     upsertedId: null
                     upsertedCount: 0
                     matchedCount: 1
-                    message: book updated
                 404 not found:
                   value:
                     message: id not found
