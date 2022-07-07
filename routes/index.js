@@ -2,8 +2,9 @@ const express = require('express')
 const { getAllBooks, addBooks, getBookById, updateBook, deleteBook } = require('../controller/booksController');
 const rateLimit = require('express-rate-limit')
 const limiter = rateLimit({
-    windowMs: 60000 * 3, // 3 minutes
-    max: 5
+    windowMs: 5 * 60000, // 5 minutes, 60000 = 1 minutes
+    max: 5 * 2,
+    message: 'too many request, wait a second!!!'
 });
 
 const router = express.Router();
@@ -50,9 +51,9 @@ router.get('/book/id/:id', limiter, getBookById)
  *       404:
  *         description: data buku berdasarkan id
  */
-router.post('/tambah', addBooks)
-router.put('/ubah/:id', updateBook)
-router.delete('/hapus/:id', deleteBook)
+router.post('/tambah', limiter, addBooks)
+router.put('/ubah/:id', limiter, updateBook)
+router.delete('/hapus/:id', limiter, deleteBook)
 
 // router.put('/books/ubah', (req, res) => {
 //   res.json({
