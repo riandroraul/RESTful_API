@@ -11,10 +11,10 @@ const router = express.Router();
 router.use(limiter)
 
 router.get('/books', limiter, getAllBooks)
-router.get('books/id/:id', limiter, getBookById)
-router.post('books/tambah', limiter, addBooks)
-router.put('books/ubah/:id', limiter, updateBook)
-router.delete('books/hapus/:id', limiter, deleteBook)
+router.get('/books/id/:id', limiter, getBookById)
+router.post('/books/tambah', limiter, addBooks)
+router.put('/books/ubah/:id', limiter, updateBook)
+router.delete('/books/hapus/:id', limiter, deleteBook)
 
 
 module.exports = router
