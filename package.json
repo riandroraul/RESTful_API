@@ -1,23 +1,27 @@
 {
-  "name": "restfull_api buku",
+  "name": "restful_api book",
   "version": "1.0.0",
-  "description": "membuat restfull api data buku",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riandroraul/RESTful_API.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/riandroraul/RESTful_API/issues"
+  },
+  "homepage": "https://github.com/riandroraul/RESTful_API#readme",
   "dependencies": {
-    "body-parser": "^1.20.0",
     "express": "^4.18.1",
-    "i": "^0.3.7",
-    "mongoose": "^6.4.1",
-    "npm": "^8.13.2",
+    "express-rate-limit": "^6.4.0",
+    "mongoose": "^6.4.2",
+    "nodemon": "^2.0.18",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.4.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.18"
   }
 }

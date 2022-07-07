@@ -2,16 +2,16 @@ paths:
   /books/tambah:
     post:
       tags:
-      - "add book"
+        - "add book"
       summary: "Add a new book to the store"
       description: "add a new book"
       operationId: "addBook"
       consumes:
-      - "application/json"
-      - "application/xml"
+        - "application/json"
+        - "application/xml"
       produces:
-      - "application/xml"
-      - "application/json"
+        - "application/xml"
+        - "application/json"
       requestBody:
         description: data json of body
         content:
