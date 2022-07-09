@@ -4,7 +4,7 @@
     "description": "restfull api dengan swagger, book api only can hit 5 times in 5 minutes for all request",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "jest"
     },
     "repository": {
         "type": "git",
@@ -23,5 +23,9 @@
         "nodemon": "^2.0.18",
         "swagger-jsdoc": "^6.2.1",
         "swagger-ui-express": "^4.4.0"
+    },
+    "devDependencies": {
+        "jest": "^28.1.2",
+        "supertest": "^6.2.4"
     }
 }
