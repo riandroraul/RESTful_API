@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllBooks, addBooks, getBookById, updateBook, deleteBook } = require('../controller/booksController');
+const { getAllBooks, addBooks, getBookById, updateBook, deleteBook, apiBook } = require('../controller/booksController');
 const rateLimit = require('express-rate-limit')
 const limiter = rateLimit({
     windowMs: 5 * 60000, // 5 minutes, 60000 = 1 minutes
@@ -11,6 +11,7 @@ const router = express.Router();
 router.use(limiter)
 
 router.get('/books', limiter, getAllBooks)
+router.get('/api/books', apiBook)
 router.get('/books/id/:id', limiter, getBookById)
 router.post('/books/tambah', limiter, addBooks)
 router.put('/books/ubah/:id', limiter, updateBook)

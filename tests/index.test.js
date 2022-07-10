@@ -1,16 +1,27 @@
 const express = require('express');
 const router = require('../routes');
 const supertest = require('supertest');
+const app = express()
 
-const { app } = require('../app')
+app.use(express.json())
 
-describe('books', () => {
-    it('returns status code 200 if success', async() => {
-        const res = await supertest(app).post('/books/tambah').send({
-            namaBuku: "nama buku 1",
-            penerbit: "penerbit 1",
-            pengarang: "pengarang 1",
-        });
-        expect(res.statusCode).toEqual(200);
-    });
-});
+app.use('/api/books', router);
+
+describe('integration test for books api', async() => {
+    it('GET /api/books - success - get all books', () => {
+        await supertest(app).get('/api/books')
+
+        expect(body).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    _id: expect.any(String),
+                    namaBuku: expect.any(String),
+                    penerbit: expect.any(String),
+                    pengarang: expect.any(String),
+                    __v: expect.any(Number)
+                })
+            ])
+        );
+        expect(statusCode).toBe(200)
+    })
+})
