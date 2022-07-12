@@ -1,27 +1,53 @@
+const request = require('supertest')
 const express = require('express');
-const router = require('../routes');
-const supertest = require('supertest');
-const app = express()
+const router = require('../routes/index');
+const { getAllBooks, getBookById } = require('../controller/booksController');
+const mongoose = require('mongoose')
 
-app.use(express.json())
+mongoose.connect('mongodb://127.0.0.1:27017/perpus', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
-app.use('/api/books', router);
+const app = express();
 
-describe('integration test for books api', async() => {
-    it('GET /api/books - success - get all books', () => {
-        await supertest(app).get('/api/books')
+app.use(router)
 
-        expect(body).toEqual(
-            expect.arrayContaining([
-                expect.objectContaining({
-                    _id: expect.any(String),
-                    namaBuku: expect.any(String),
-                    penerbit: expect.any(String),
-                    pengarang: expect.any(String),
-                    __v: expect.any(Number)
-                })
-            ])
-        );
-        expect(statusCode).toBe(200)
-    })
-})
+app.get('/books', getAllBooks);
+app.get('/books/id/:id', getBookById)
+
+request(app)
+  .get('/books')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .end((err, res) => {
+    if (err) throw err;
+  });
+
+describe('GET /books', () => {
+    it('GET /books response with status code 200', (done) => {
+        request(app)
+        .get('/books')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, done);
+    });
+});
+
+request(app)
+  .get('/books/id/:id')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .end((err, res) => {
+    if (err) throw err;
+  });
+
+describe('GET /books/id/:id', () => {
+    it('GET /books/id/:id get books by id response with status code 200', (done) => {
+        request(app)
+        .get('/books/id/:id')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, done);
+    });
+});

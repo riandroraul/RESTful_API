@@ -88,8 +88,8 @@ const deleteBook = async(req, res) => {
     }
 }
 
-const apiBook = (req, res) => {
-    res.json(books);
-}
+// const apiBook = (req, res) => {
+//     res.json(books);
+// }
 
-module.exports = { getAllBooks, addBooks, getBookById, updateBook, deleteBook, apiBook }
+module.exports = { getAllBooks, addBooks, getBookById, updateBook, deleteBook }

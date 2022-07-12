@@ -27,7 +27,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/perpus', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-const db = mongoose.connection;
+module.exports.db = mongoose.connection;
 // db.once('open', () => {console.log('database connected')})
 
 

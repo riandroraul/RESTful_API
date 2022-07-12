@@ -45,3 +45,8 @@ paths:
                     headers:
                       statusCode: 400
                       message: not found
+                200 success:
+                  value:
+                    headers:
+                      statusCode: 200
+                      message: success
