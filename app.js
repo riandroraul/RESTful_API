@@ -44,6 +44,8 @@ app.use(router)
 // app.put('/books/ubah', router)
 // app.delete('/books/hapus', router)
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`app listen at http://localhost:${port}`)
 })
+
+module.exports = {app, server}
