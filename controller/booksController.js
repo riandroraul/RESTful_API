@@ -1,18 +1,17 @@
 const Book = require('../models/books')
-const books = require('../models/books.json')
 
-const getAllBooks = async(req, res) => {
+const getAllBooks = async (req, res) => {
     try {
         const books = await Book.find()
-        res.json(books)
+        res.status(200).json(books)
     } catch (err) {
-        res.json({
-            message: err.message
+        res.status(404).json({
+        message: err.message
         })
     }
 }
 
-const getBookById = async(req, res) => {
+const getBookById = async (req, res) => {
     try {
         const book = await Book.findById(req.params.id)
         res.status(200).json({
@@ -20,14 +19,14 @@ const getBookById = async(req, res) => {
             message: 'buku ditemukan'
         })
     } catch (err) {
-        res.json({
+        res.status(404).json({
             // message: err.message,
-            message: 'id not found'
+            message: 'id not found',
         })
     }
 }
 
-const addBooks = async(req, res) => {
+const addBooks = async (req, res) => {
     const books = new Book({
         namaBuku: req.body.namaBuku,
         penerbit: req.body.penerbit,
@@ -78,7 +77,7 @@ const updateBook = async(req, res) => {
 //   }
 // }
 
-const deleteBook = async(req, res) => {
+const deleteBook = async(req, res, Book) => {
     try {
         const delBook = await Book.deleteOne({ _id: req.params.id })
         res.status(200).json(delBook)

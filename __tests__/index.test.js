@@ -1,172 +1,128 @@
-const supertest = require('supertest');
-const {app, server} = require('../app');
-const mockBook = require('../models/books')
-const { connectDB, disconnectDB } = require('./db');
-const request = supertest(app)
+const request = require('supertest');
+const BookMockup = require('../models/books.mockup');
+const routerTesting = require('../routes/testRoutes');
+const mongoose = require('mongoose')
+const express = require('express');
 
-describe('API test', () => {
-  beforeAll(() => {
-    connectDB();
+const app = express()
+app.use(express.json())
+app.use(routerTesting)
+
+beforeAll(async () => {
+  await mongoose.connect('mongodb://127.0.0.1:27017/testing', {
+    useNewUrlParser: true,
+    // useUnifiedTopology: true,
   });
+  const bookMockup = new BookMockup({
+    namaBuku: 'namabuku1',
+    penerbit: 'penerbit1',
+    pengarang: 'pengarang1'
+  })
+  return await bookMockup.save();
+})
 
-  afterAll(() => {
-    disconnectDB();
-    server.close();
-  });
+afterAll( async () => {
+  await BookMockup.deleteMany();
+  return await mongoose.connection.close()
+})
 
-describe('POST /books/tambah', () => {
-  it('example request using a mocked database instance', async () => {
-      const res = await request.post('/books/tambah', {
-        namaBuku: "namabuku1",
-        penerbit: "penerbit1",
-        pengarang: "pengarang1"
-      });
 
-      expect(res.status).toBe(201);
+
+describe("GET testing get all books", () => {
+  test("Get /books", async () => {
+    const result = await request(app).get("/books");
+
+    expect(result.header['content-type']).toEqual("application/json; charset=utf-8");
+    expect(result.statusCode).toEqual(200);
+  })
+  test("ERROR GET testing get all books endpoint wrong", async () => {
+    const result = await request(app).get("/"); // jika endpoint salah
+    expect(result.header['content-type']).toEqual('text/html; charset=utf-8');
+    expect(result.statusCode).toEqual(404);
+  })
+})
+
+describe('GET:id testing get book by id', () => {
+  test("GET /books/id/:id", async () => {
+    const book = await BookMockup.find();
+    const id = book[0]._id;
+    const result = await request(app).get(`/books/id/${id}`);
+    expect(result.header['content-type']).toEqual("application/json; charset=utf-8");
+    expect(result.statusCode).toEqual(200);
+  })
+  test("ERROR GET testing error get book by id wrong", async () => {
+    const id = 'salah';
+    const result = await request(app).get(`/books/id/${id}`);
+    expect(result.header['content-type']).toEqual("application/json; charset=utf-8");
+    expect(result.statusCode).toEqual(404);
+  })
+
+})
+
+
+describe('POST testing add book', () => {
+  test("POST /books/tambah", async () => {
+    const dataBeforeAdded = await BookMockup.count();
+    const result = await request(app).post("/books/tambah")
+    .send({
+      namaBuku: "namabuku12",
+      penerbit: "penerbit12",
+      pengarang: "pengarang1"
     });
-  });
-});
+
+    const countBooks = await BookMockup.count();
+    expect(countBooks).toBe(dataBeforeAdded + 1);
+    expect(result.statusCode).toEqual(201);
+    expect(result.header['content-type']).toEqual("application/json; charset=utf-8");
+  })
+
+  test('ERROR POST /books/tambah', async () => {
+    const result = await request(app).post("/books/tambah");
+    expect(result.header['content-type']).toEqual("application/json; charset=utf-8");
+    expect(result.statusCode).toEqual(400);
+  })
+  
+})
 
 
+describe("PUT Testing update book", () => {
+test("PUT /books/ubah/:id", async () => {
+    const book = await BookMockup.find();
+    const id = book[0]._id;
+    const result = await request(app).put(`/books/ubah/${id}`).send({
+      namaBuku: "namabuku12",
+      penerbit: "penerbit12",
+      pengarang: "pengarang1"
+    });
+    expect(result.header['content-type']).toEqual('application/json; charset=utf-8');
+    expect(result.statusCode).toEqual(200);
+  })
+  
+  test("ERROR PUT /books/ubah/:id", async () => {
+    const id = 'salah';
+    const result = await request(app).put(`/books/ubah/${id}`);
+    expect(result.header['content-type']).toEqual('application/json; charset=utf-8');
+    expect(result.statusCode).toEqual(404);
+    // expect(message).toEqual("id not found");
+  })
+})
 
 
+describe("DELETE test delete book by id", () => {
+  test("DELETE /books/hapus/:id", async () => { 
+    const book = await BookMockup.find();
+    const id = book[0]._id;
+    const result = await request(app).delete(`/books/hapus/${id}`);
+    expect(result.header['content-type']).toEqual('application/json; charset=utf-8');
+    expect(result.statusCode).toEqual(200);
+  })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// describe("testing RESTful API book with jest and supertest", () => {
-//   test("GET get all books", async (done) => {
-//     await request(app).get("/books")
-//       .expect("Content-Type", /json/)
-//       .expect(200)
-//       .expect( () => {
-//         res.body.namaBuku = 'namabuku1',
-//         res.body.penerbit = 'penerbit1',
-//         res.body.pengarang = 'pengarang1'
-//       })
-//       .end( (err, res) => {
-//         if(err) throw done(err);
-//         return done();
-//       })
-//   });
-// });
-
-// describe("testing RESTful API book with jest and supertest", () => {
-//   test("GET get book by id", (done) => {
-//     request(app)
-//       .get("/books/id/:id")
-//       .expect("Content-Type", /json/)
-//       .expect(200)
-//       .expect( (res) => {
-//         res.body.namaBuku = 'namabuku1',
-//         res.body.penerbit = 'penerbit1',
-//         res.body.pengarang = 'pengarang1'
-//       })
-//       .end( (err, res) => {
-//         if(err) throw done(err);
-//         return done();
-//       })
-//   });
-// });
-
-// describe("testing RESTful API book with jest and supertest", () => {
-//   test("POST add book to store", (done) => {
-//     request(app)
-//       .post("/books/tambah")
-//       .expect("Content-Type", /json/)
-//       .send({
-//         namaBuku: "namabuku1",
-//         penerbit: "penerbit1",
-//         pengarang: "pengarang1"
-//       })
-//       .expect(201)
-//       .expect( (res) => {
-//           res.body.namaBuku = String,
-//           res.body.penerbit = String,
-//           res.body.pengarang = String,
-//           res.body._id = String
-//         })
-//         .end( (err, res) => {
-//           if(err) return done(err);
-//           return done()
-//       })
-//   });
-// });
-
-// let bookId = '62cd189f14dddf64208731bd'
-
-// describe("testing RESTful API book with jest and supertest", () => {
-//   // Hidden for simplicity
-//   test("PUT update book data", (done) => {
-//     request(app)
-//       request(app)
-//       .put(`/books/ubah/${bookId}`)
-//       .expect("Content-Type", /json/)
-//       .send({
-//         namaBuku: "namabuku1",
-//         penerbit: "penerbit1",
-//         pengarang: "pengarang1"
-//       })
-//       .expect(200)
-//       .expect((res) => {
-//         res.body.namaBuku = 'namabuku1',
-//         res.body.penerbit = 'penerbit1',
-//         res.body.pengarang = 'pengarang1',
-//         res.body._id = 'jlkjkjdas9897887sdfsdf'
-//       })
-//       .end((err, res) => {
-//         if (err) return done(err);
-//         return done();
-//       });
-//   });
-// });
-
-// describe('testing RESTful API book with jest and supertest', () => {
-//   test("DELETE delete book by id", (done) => {
-//     request(app)
-//     .delete(`/books/hapus/${bookId}`)
-//     .expect("Content-Type", /json/)
-//     .expect(200)
-//     .expect( (res) => {
-//       res.body.namaBuku = 'namabuku1',
-//       res.body.penerbit = 'penerbit1',
-//       res.body.pengarang = 'pengarang1',
-//       res.body._id = 'jlkjkjdas9897887sdfsdf'
-//     })
-//     .end( (err, res) => {
-//       if(err) return done(err)
-//       return done()
-//     })
-//   })
-// })
-
-
-
-
+  test("ERROR DELETE /books/hapus/:id", async () => {
+    const result = await request(app).delete(`/books/hapus/id`);
+    expect(result.header['content-type']).toEqual('application/json; charset=utf-8');
+    expect(result.statusCode).toEqual(404);
+  })
+})
 
 
 
