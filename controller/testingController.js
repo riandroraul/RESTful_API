@@ -32,15 +32,19 @@ const addBooks = async(req, res) => {
         penerbit: req.body.penerbit,
         pengarang: req.body.pengarang,
     });
+    const duplikat = await BookMockup.findOne({namaBuku: books.namaBuku})
     try {
+        if(duplikat){
+            throw ({errors: [{message: "nama buku sudah ada"}]})
+        }
         const addBook = await books.save()
         res.status(201).json({ addBook, message: "berhasil ditambahkan" })
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json({ error: err.errors });
     }
 }
 
-const updateBook = async(req, res) => {
+const updateBook = async (req, res) => {
     try {
         const bookUpdated = await BookMockup.updateOne({ _id: req.params.id }, {
             $set: {

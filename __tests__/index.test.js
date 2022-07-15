@@ -27,7 +27,6 @@ afterAll( async () => {
 })
 
 
-
 describe("GET testing get all books", () => {
   test("Get /books", async () => {
     const result = await request(app).get("/books");
@@ -61,12 +60,27 @@ describe('GET:id testing get book by id', () => {
 
 
 describe('POST testing add book', () => {
+
+  test('ERROR POST duplikat data buku', async () => {
+    const book = await BookMockup.count();
+    const result = await request(app).post("/books/tambah").send({
+      namaBuku: "namabuku1",
+      penerbit: "penerbit1",
+      pengarang: "pengarang1"
+    })
+    const newCount = await BookMockup.count()
+    expect(newCount).toEqual(book);
+    expect(result.statusCode).toEqual(400);
+    expect(result.header['content-type']).toEqual("application/json; charset=utf-8");
+    expect('nama buku sudah ada')
+  })
+  
   test("POST /books/tambah", async () => {
     const dataBeforeAdded = await BookMockup.count();
     const result = await request(app).post("/books/tambah")
     .send({
       namaBuku: "namabuku12",
-      penerbit: "penerbit12",
+      penerbit: "penerbit1",
       pengarang: "pengarang1"
     });
 
@@ -85,13 +99,14 @@ describe('POST testing add book', () => {
 })
 
 
-describe("PUT Testing update book", () => {
-test("PUT /books/ubah/:id", async () => {
+describe("PUT Testing update BookMockup", () => {
+
+  test("PUT /BookMockups/ubah/:id", async () => {
     const book = await BookMockup.find();
     const id = book[0]._id;
     const result = await request(app).put(`/books/ubah/${id}`).send({
-      namaBuku: "namabuku12",
-      penerbit: "penerbit12",
+      namaBuku: "namabuku2",
+      penerbit: "penerbit1",
       pengarang: "pengarang1"
     });
     expect(result.header['content-type']).toEqual('application/json; charset=utf-8');

@@ -33,10 +33,14 @@ const addBooks = async (req, res) => {
         pengarang: req.body.pengarang,
     });
     try {
+        const duplikat = await Book.findOne({namaBuku: books.namaBuku})
+        if(duplikat){
+            throw ({errors: [{message: "nama buku sudah ada"}]})
+        }
         const addBook = await books.save()
         res.status(201).json({ addBook, message: "berhasil ditambahkan" })
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json({ error: err.errors });
     }
 }
 
@@ -77,7 +81,7 @@ const updateBook = async(req, res) => {
 //   }
 // }
 
-const deleteBook = async(req, res, Book) => {
+const deleteBook = async(req, res) => {
     try {
         const delBook = await Book.deleteOne({ _id: req.params.id })
         res.status(200).json(delBook)

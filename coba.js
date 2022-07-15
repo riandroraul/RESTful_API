@@ -14,6 +14,6 @@ const [mangga, ...apelNjeruk] = fruit
 
 const string1 = 'test3'
 const string2 = 'test2'
-const string3 = string2 && string1
+const string3 = string1 || string2
 
 console.log(string3)
