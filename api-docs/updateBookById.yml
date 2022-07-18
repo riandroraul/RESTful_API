@@ -4,7 +4,7 @@ paths:
       tags:
       - "update book by id"
       summary: "update book data by id"
-      description: "update book data"
+      description: "update book data, cannot update same book name"
       operationId: "updateBook"
       consumes:
       - application/json
@@ -62,4 +62,7 @@ paths:
                     matchedCount: 1
                 404 not found:
                   value:
-                    message: id not found
+                    message: "Cast to ObjectId failed for value \"62d1121dc54060b2797\" (type string) at path \"_id\" for model \"Book\""
+                400 bad request:
+                  value:
+                    message: "nama buku sudah ada"

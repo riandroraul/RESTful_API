@@ -40,13 +40,15 @@ paths:
                 #       penerbit: penerbit1
                 #       pengarang: pengarang1
                 #       # role: Client
-                400 invalid:
-                  value:
-                    headers:
-                      statusCode: 400
-                      message: not found
                 200 success:
                   value:
-                    headers:
-                      statusCode: 200
-                      message: success
+                    book:
+                      _id: 62d1121dc54060b2797101c2,
+                      namaBuku: Belajar Javascript4,
+                      penerbit: metode put updated,
+                      pengarang: metode put updated,
+                      __v: 0
+                    message: buku ditemukan
+                404 not found:
+                  value:
+                    message: id not found

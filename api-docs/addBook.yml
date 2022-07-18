@@ -4,7 +4,7 @@ paths:
       tags:
         - "add book"
       summary: "Add a new book to the store"
-      description: "add a new book"
+      description: "add a new book, cannot add same book name"
       operationId: "addBook"
       consumes:
         - "application/json"
@@ -28,6 +28,20 @@ paths:
                 pengarang:
                   type: string
                   default: pengarang1
-      responses:
-        "405":
-          description: "Invalid input"
+      # responses:
+      #   "405":
+      #     desciption: "Invalid input"
+            examples:
+              200 success:
+                value:
+                  addBook: 
+                      namaBuku: Belajar Javascript 4,
+                      penerbit: G2Academy,
+                      pengarang: Rafael Butan,
+                      _id: 62d520c2fad2e98ea4e63178,
+                      __v: 0
+                  message: berhasil ditambahkan
+              400 bad request:
+                value:
+                  message: nama buku sudah ada
+
