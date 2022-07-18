@@ -46,6 +46,13 @@ const addBooks = async (req, res) => {
 
 const updateBook = async(req, res) => {
     try {
+        const Bookid = Book.findOne({_id: req.params.id})
+        const duplikat = await Book.findOne({namaBuku: req.body.namaBuku})
+        
+        if(req.params.id !== Bookid && duplikat){
+            throw new Error('nama buku sudah ada')
+        }
+        console.log(Bookid)
         const bookUpdated = await Book.updateOne({ _id: req.params.id }, {
             $set: {
                 namaBuku: req.body.namaBuku,
@@ -55,8 +62,7 @@ const updateBook = async(req, res) => {
         })
         res.status(200).json(bookUpdated)
     } catch (err) {
-        // res.status(400).json({message: err.message});
-        res.status(404).json({ message: 'id not found' });
+        res.status(400).json({message: err.message, message: 'id not found'});
     }
 }
 

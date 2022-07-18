@@ -61,18 +61,18 @@ describe('GET:id testing get book by id', () => {
 
 describe('POST testing add book', () => {
 
-  test('ERROR POST duplikat data buku', async () => {
+  test('POST duplikat data buku', async () => {
     const book = await BookMockup.count();
     const result = await request(app).post("/books/tambah").send({
       namaBuku: "namabuku1",
       penerbit: "penerbit1",
       pengarang: "pengarang1"
     })
-    const newCount = await BookMockup.count()
-    expect(newCount).toEqual(book);
+    const newBook = await BookMockup.count()
+    expect(newBook).toEqual(book);
     expect(result.statusCode).toEqual(400);
     expect(result.header['content-type']).toEqual("application/json; charset=utf-8");
-    expect('nama buku sudah ada')
+    expect('nama buku sudah ada');
   })
   
   test("POST /books/tambah", async () => {
@@ -99,19 +99,36 @@ describe('POST testing add book', () => {
 })
 
 
-describe("PUT Testing update BookMockup", () => {
+describe("PUT Testing update Book", () => {
 
-  test("PUT /BookMockups/ubah/:id", async () => {
+  test("PUT ubah data buku", async () => {
     const book = await BookMockup.find();
     const id = book[0]._id;
     const result = await request(app).put(`/books/ubah/${id}`).send({
-      namaBuku: "namabuku2",
+      namaBuku: "namabuku123",
       penerbit: "penerbit1",
       pengarang: "pengarang1"
     });
     expect(result.header['content-type']).toEqual('application/json; charset=utf-8');
     expect(result.statusCode).toEqual(200);
   })
+
+  test('PUT duplikat data buku', async () => {
+    const book = await BookMockup.find();
+    const id = book[0]._id;
+    const countBook = await BookMockup.count()
+    const result = await request(app).put(`/books/ubah/${id}`).send({
+      namaBuku: "namabuku123",
+      penerbit: "penerbit1",
+      pengarang: "pengarang1"
+    })
+    const newBook = await BookMockup.count()
+    expect(newBook).toEqual(countBook);
+    expect(result.statusCode).toEqual(400);
+    expect(result.header['content-type']).toEqual("application/json; charset=utf-8");
+    expect('nama buku sudah ada');
+  })
+
   
   test("ERROR PUT /books/ubah/:id", async () => {
     const id = 'salah';
@@ -120,6 +137,8 @@ describe("PUT Testing update BookMockup", () => {
     expect(result.statusCode).toEqual(404);
     // expect(message).toEqual("id not found");
   })
+
+  
 })
 
 

@@ -16,4 +16,4 @@ const string1 = 'test3'
 const string2 = 'test2'
 const string3 = string1 || string2
 
-console.log(string3)
+console.log(apelNjeruk)
