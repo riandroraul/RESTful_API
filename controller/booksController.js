@@ -6,7 +6,7 @@ const getAllBooks = async (req, res) => {
         res.status(200).json(books)
     } catch (err) {
         res.status(404).json({
-        message: err.message
+            message: err.message
         })
     }
 }
@@ -96,8 +96,12 @@ const deleteBook = async(req, res) => {
     }
 }
 
+const reqError = (req, res) => {
+    res.status(400).json({status: 400, message: 'cannot request with this end point'})
+}
+
 // const apiBook = (req, res) => {
 //     res.json(books);
 // }
 
-module.exports = { getAllBooks, addBooks, getBookById, updateBook, deleteBook }
+module.exports = { getAllBooks, addBooks, getBookById, updateBook, deleteBook, reqError }

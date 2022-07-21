@@ -23,7 +23,7 @@ beforeAll(async () => {
 
 afterAll( async () => {
   await BookMockup.deleteMany();
-  return await mongoose.connection.close()
+  return await mongoose.connection.close();
 })
 
 
@@ -129,7 +129,6 @@ describe("PUT Testing update Book", () => {
     expect('nama buku sudah ada');
   })
 
-  
   test("ERROR PUT /books/ubah/:id", async () => {
     const id = 'salah';
     const result = await request(app).put(`/books/ubah/${id}`);
@@ -138,7 +137,6 @@ describe("PUT Testing update Book", () => {
     // expect(message).toEqual("id not found");
   })
 
-  
 })
 
 
