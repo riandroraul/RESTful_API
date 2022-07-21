@@ -116,3 +116,31 @@ const createPerson = (name, age, gender) => {
 
 // console.log(createPerson('ignas', 20, 'men'))
 
+
+class Vegetable {
+  constructor(name){
+    return {name}
+  }
+}
+const carrot = new Vegetable('carrot');
+// console.log(carrot.name); // Should display 'carrot'
+
+// C = 5/9 * (F - 32) and F = C * 9.0 / 5 + 32
+class Thermostat {
+  constructor(scaleF){
+    this._scaleF = scaleF
+  }
+
+  set temperature (scaleC){
+    this._temp = scaleC
+  }
+
+  get temperature (){
+    return this._temp
+  }
+}
+
+const thermos = new Thermostat(76); // Setting in Fahrenheit scale
+let temp = thermos.temperature; // 24.44 in Celsius
+thermos.temperature = 26;
+temp = thermos.temperature; // 26 in Celsius
